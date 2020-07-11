@@ -1,11 +1,11 @@
 service:
-  name: aws-nestjs-starter
+  name: blue-phoenix
 
 provider:
   name: aws
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
-  region: ${opt:region, 'us-east-1'}
+  region: ${opt:region, 'ap-southeast-1'}
   environment:
     SERVICE: ${self:service}
     STAGE: ${self:provider.stage}

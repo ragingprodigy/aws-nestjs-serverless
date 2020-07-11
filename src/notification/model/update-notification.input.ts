@@ -4,7 +4,7 @@ import { NotificationStatus } from './notification.enum';
 
 @InputType()
 export class UpdateNotificationInput {
-  @IsIn([NotificationStatus.Deleted])
+  @IsIn([NotificationStatus.Deleted, NotificationStatus.Active])
   @IsEnum(NotificationStatus)
   @Field(/* istanbul ignore next */ () => NotificationStatus)
   status: NotificationStatus;
