@@ -26,7 +26,7 @@ export class NotificationService {
     return this.model.update(key, input);
   }
 
-  findAll = () => this.model.query('targetId').all().exec();
+  findAll = () => this.model.scan().exec();
 
   findOne(key: NotificationKey) {
     return this.model.get(key);
