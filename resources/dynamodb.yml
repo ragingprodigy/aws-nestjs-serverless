@@ -4,7 +4,13 @@ Resources:
     DeletionPolicy: Delete
     Properties:
       TableName: '${self:service}-${self:provider.stage}-Notification'
-      BillingMode: PAY_PER_REQUEST
+      BillingMode: PROVISIONED
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: false
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
       AttributeDefinitions:
         - AttributeName: id
           AttributeType: S
@@ -13,6 +19,8 @@ Resources:
         - AttributeName: userId
           AttributeType: S
         - AttributeName: status
+          AttributeType: S
+        - AttributeName: ttl
           AttributeType: S
       KeySchema:
         - AttributeName: id

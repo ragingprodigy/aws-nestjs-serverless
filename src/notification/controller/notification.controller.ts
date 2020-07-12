@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Get,
@@ -21,10 +20,6 @@ export class NotificationController {
     return this.notificationService.create(body);
   }
 
-  @Get() getAllNotifications() {
-    return this.notificationService.findAll();
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateNotificationInput) {
     return this.notificationService.update({ id }, body);
@@ -43,6 +38,7 @@ export class NotificationController {
     if (targetId && !userId) {
       return this.notificationService.findByTargetId(targetId);
     }
-    throw new BadRequestException();
+
+    return this.notificationService.findAll();
   }
 }

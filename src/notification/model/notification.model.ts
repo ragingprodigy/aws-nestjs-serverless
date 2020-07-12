@@ -16,4 +16,7 @@ export class Notification extends CreateNotificationInput {
 
   @Field()
   createAt: string;
+
+  @Field()
+  ttl: string;
 }

@@ -25,7 +25,7 @@ export const NotificationSchema = new Schema({
   status: {
     type: String,
   },
-  createAt: {
+  ttl: {
     type: String,
   },
 });

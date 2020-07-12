@@ -49,4 +49,56 @@ functions:
           method: any
 
 resources:
-  - ${file(resources/dynamodb.yml)}
+  # - ${file(resources/dynamodb.yml)}
+  Resources:
+    NotificationDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        TableName: '${self:service}-${self:provider.stage}-Notification'
+        BillingMode: PROVISIONED
+        TimeToLiveSpecification:
+          AttributeName: ttl
+          Enabled: false
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: targetId
+            AttributeType: S
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: status
+            AttributeType: S
+          - AttributeName: ttl
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: targetIdGlobalIndex
+            KeySchema:
+              - AttributeName: targetId
+                KeyType: HASH
+              - AttributeName: status
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+          - IndexName: userIdGlobalIndex
+            KeySchema:
+              - AttributeName: userId
+                KeyType: HASH
+              - AttributeName: status
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+
+  Outputs:
+    NotificationsTableArn:
+      Description: The ARN for the Notification's Table
+      Value:
+        'Fn::GetAtt': [NotificationDynamoDBTable, Arn]
+      Export:
+        Name: ${self:service}:${opt:stage}:NotificationsTableArn

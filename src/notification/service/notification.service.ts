@@ -19,6 +19,7 @@ export class NotificationService {
       id: uuid.v4(),
       status: NotificationStatus.Active,
       createAt: new Date().toISOString(),
+      ttl: `${new Date().getTime() + 3600000}`,
     });
   }
 
