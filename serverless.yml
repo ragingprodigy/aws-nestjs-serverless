@@ -101,4 +101,4 @@ resources:
       Value:
         'Fn::GetAtt': [NotificationDynamoDBTable, Arn]
       Export:
-        Name: ${self:service}:${opt:stage}:NotificationsTableArn
+        Name: ${self:service}:${self:provider.stage}:NotificationsTableArn
